@@ -5,18 +5,26 @@ interface AnswerProps {
   answerNumber: number;
   answerText: string;
   isRight: boolean;
+  setIsRightAnswerSelected: (isRight: boolean) => void;
+  isRightAnswerSelected: boolean;
+  highlight: boolean;
 }
 export default function Answer({
   answerNumber,
   answerText,
   isRight,
+  setIsRightAnswerSelected,
+  isRightAnswerSelected,
+  highlight,
 }: AnswerProps) {
-  const [highlightColor, setHighlightColor] = useState("");
-  function choseAnswer() {
-    if (isRight) {
-      setHighlightColor("green");
+  function setIsRight(e: MouseEvent) {
+    if (!highlight) {
+      setIsRightAnswerSelected(isRight);
+    } else {
+      e.preventDefault();
     }
   }
+
   return (
     <div className="answer">
       <span className="number">{answerNumber}</span>
@@ -26,7 +34,16 @@ export default function Answer({
         id={`answer${answerNumber}`}
         className="radio"
       />
-      <label className="label" htmlFor={`answer${answerNumber}`}>
+      <label
+        onClick={setIsRight}
+        htmlFor={`answer${answerNumber}`}
+        className={` ${
+          (highlight && isRight && !isRightAnswerSelected) ||
+          (highlight && isRight && isRightAnswerSelected)
+            ? "green"
+            : ""
+        } ${highlight && !isRightAnswerSelected ? "red" : ""} label`}
+      >
         {answerText}
       </label>
     </div>
