@@ -215,8 +215,11 @@ button:disabled {
   font-size: 16px;
   font-weight: bolder;
 }
-.message-popup .succes {
+.message-popup .success {
   color: var(--succes-color);
+}
+.message-popup .failure {
+  color: var(--failure-color);
 }
 @media only screen and (max-width: 1100px) {
   .container {

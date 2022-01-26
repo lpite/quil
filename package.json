@@ -1,7 +1,7 @@
 {
-  "private": false,
   "name": "quil",
   "version": "0.0.0",
+  "author": "lpite",
   "license": "MIT",
   "scripts": {
     "build": "preact build",

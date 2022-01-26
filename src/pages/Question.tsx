@@ -29,23 +29,23 @@ export default function Question({}: QuestionProps) {
   }
   function toNextQuestion(e: h.JSX.TargetedEvent) {
     e.preventDefault();
-
     setHighlightAnswers(true);
-
+    if (!highlightAnswers) {
+      setShowPoup(true);
+    }
     if (isRightAnswerSelected && highlightAnswers) {
       setHighlightAnswers(false);
       setQuestionId(questionId + 1);
       fetchQuestion(questionId + 1);
       setDisabledButton(true);
-    }
-    if (isRightAnswerSelected && !highlightAnswers) {
-      setShowPoup(true);
+      setShowPoup(false);
     }
     if (!isRightAnswerSelected && highlightAnswers) {
       setHighlightAnswers(false);
       setQuestionId(questionId + 1);
       fetchQuestion(questionId + 1);
       setDisabledButton(true);
+      setShowPoup(false);
     }
   }
   useEffect(() => {
@@ -73,7 +73,7 @@ export default function Question({}: QuestionProps) {
   }
   return (
     <main className="question-page">
-      <Popup isOpen={showPoup} />
+      <Popup isOpen={showPoup} success={isRightAnswerSelected} />
       <div className="question-block">
         <h3 className="title">Питання</h3>
         <span className="text">{question.questionText}</span>
