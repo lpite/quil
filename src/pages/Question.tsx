@@ -52,7 +52,7 @@ export default function Question({}: QuestionProps) {
     if (showPoup) {
       setTimeout(() => {
         setShowPoup(false);
-      }, 2000);
+      }, 5000);
     }
   }, [showPoup]);
   useEffect(() => {
