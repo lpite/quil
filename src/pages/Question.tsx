@@ -29,12 +29,14 @@ export default function Question({}: QuestionProps) {
   }
   function toNextQuestion(e: h.JSX.TargetedEvent) {
     e.preventDefault();
+
     setHighlightAnswers(true);
 
     if (isRightAnswerSelected && highlightAnswers) {
       setHighlightAnswers(false);
       setQuestionId(questionId + 1);
       fetchQuestion(questionId + 1);
+      setDisabledButton(true);
     }
     if (isRightAnswerSelected && !highlightAnswers) {
       setShowPoup(true);
@@ -43,6 +45,7 @@ export default function Question({}: QuestionProps) {
       setHighlightAnswers(false);
       setQuestionId(questionId + 1);
       fetchQuestion(questionId + 1);
+      setDisabledButton(true);
     }
   }
   useEffect(() => {
