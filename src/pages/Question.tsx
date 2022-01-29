@@ -1,9 +1,9 @@
 import { h } from "preact";
-import { route } from "preact-router";
 import { useEffect, useState } from "preact/hooks";
 import { APIURL } from "../../config";
 import Popup from "../components/popup/Popup";
 import Answer from "../components/questionPage/Answer";
+import Loading from "../components/questionPage/Loading"
 
 interface QuestionProps {
   path: string;
@@ -22,6 +22,8 @@ export default function Question({}: QuestionProps) {
   const [isRightAnswerSelected, setIsRightAnswerSelected] = useState(false);
   const [question, setQuestion] = useState({} as QuestionObject);
   const [highlightAnswers, setHighlightAnswers] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const [showPoup, setShowPoup] = useState(false);
   const [questionId, setQuestionId] = useState(0);
   function changeIsRight(value: boolean) {
@@ -51,8 +53,9 @@ export default function Question({}: QuestionProps) {
   }
   useEffect(() => {
     if (showPoup) {
-      setTimeout(() => {
+      const timeOut = setTimeout(() => {
         setShowPoup(false);
+        clearTimeout(timeOut);
       }, 5000);
     }
   }, [showPoup]);
@@ -62,7 +65,9 @@ export default function Question({}: QuestionProps) {
     }
   }, [question]);
   function fetchQuestion(id: number) {
+    setIsLoading(true);
     fetch(`${APIURL}/get/question/?id=${id}`).then(async (response) => {
+      setIsLoading(false);
       const json = await response.json();
       if (json) {
         setQuestion(json);
@@ -71,19 +76,13 @@ export default function Question({}: QuestionProps) {
         setQuestionId(0);
         setQuestion(json);
       }
+    }).catch(() => {
+      setIsLoading(false);
     });
-    // fetch("../../assets/questions.json").then(async (data) => {
-    //   const json = await data.json();
-    //   if (json[id]) {
-    //     setQuestion(json[id]);
-    //   } else {
-    //     setQuestionId(0);
-    //     setQuestion(json[0]);
-    //   }
-    // });
   }
   return (
     <main className="question-page">
+      <Loading isLoading={isLoading} />
       <Popup isOpen={showPoup} success={isRightAnswerSelected} />
       <div className="question-block">
         <h3 className="title">Питання</h3>
