@@ -52,7 +52,14 @@ button:disabled {
   margin: 10px 10px;
 }
 .header-score {
+}
+.header-image {
+  width: 28px;
+  height: 28px;
   margin: 0 10px;
+  background-color: var(--elem-color);
+  padding: 6px;
+  border-radius: 20px;
 }
 .container {
   width: 1000px;

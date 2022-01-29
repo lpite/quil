@@ -1,6 +1,7 @@
 import { h } from "preact";
 import { route } from "preact-router";
 import { useEffect, useState } from "preact/hooks";
+import { APIURL } from "../../config";
 import Popup from "../components/popup/Popup";
 import Answer from "../components/questionPage/Answer";
 
@@ -61,15 +62,25 @@ export default function Question({}: QuestionProps) {
     }
   }, [question]);
   function fetchQuestion(id: number) {
-    fetch("../../assets/questions.json").then(async (data) => {
-      const json = await data.json();
-      if (json[id]) {
-        setQuestion(json[id]);
+    fetch(`${APIURL}/get/question/?id=${id}`).then(async (response) => {
+      const json = await response.json();
+      if (json) {
+        setQuestion(json);
+        setQuestionId(json.id);
       } else {
         setQuestionId(0);
-        setQuestion(json[0]);
+        setQuestion(json);
       }
     });
+    // fetch("../../assets/questions.json").then(async (data) => {
+    //   const json = await data.json();
+    //   if (json[id]) {
+    //     setQuestion(json[id]);
+    //   } else {
+    //     setQuestionId(0);
+    //     setQuestion(json[0]);
+    //   }
+    // });
   }
   return (
     <main className="question-page">

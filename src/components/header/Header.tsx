@@ -8,6 +8,7 @@ export default function Header() {
         меню
       </Link>
       <span className="header-score">999 їжачків</span>
+      <img src="../../assets/user.svg" alt="" className="header-image" />
     </header>
   );
 }
